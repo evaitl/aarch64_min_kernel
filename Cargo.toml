@@ -1,0 +1,9 @@
+[package]
+name="aarch64_kernel"
+version="0.1.0"
+edition="2018"
+authors=["evaitl"]
+
+[dependencies]
+
+
