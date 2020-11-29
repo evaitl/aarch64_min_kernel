@@ -4,6 +4,6 @@ build-std-features=["compiler-builtins-mem"]
 
 [build]
 target="aarch64-xmin.json"
-rustflags = ["-C", "link-arg=-Tlink.x"]
+rustflags = ["-C", "link-arg=-Tlink.x", "-C", "llvm-args=-global-isel=false"]
 
 

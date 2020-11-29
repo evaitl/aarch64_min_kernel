@@ -4,6 +4,7 @@ use core::panic::PanicInfo;
 const UART0:*mut u8= 0x0900_0000 as *mut u8;
 static HELLO: &[u8] = b"Hello world from the kernel\n";
 fn write_serial(ch: u8) {
+    use core::ptr;
     unsafe {
         ptr::write_volatile(UART0,ch);
     }
@@ -11,8 +12,8 @@ fn write_serial(ch: u8) {
 #[no_mangle]
 pub unsafe extern "C" fn _start() -> ! {
     loop {
-        for (_i, &byte) in HELLO.iter().enumerate() {
-            write_serial(byte);
+        for byte in HELLO {
+            write_serial(*byte);
         }
     }
 }

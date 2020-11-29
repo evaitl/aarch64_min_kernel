@@ -1,4 +1,4 @@
-Sat nov 28:
+## Sat Nov 28:
 
 Starting on this thing. Basing it on my x86 min kernel. 
 
@@ -36,7 +36,7 @@ A [pl011](https://tinyurl.com/y4p747zn) compatible uart:
                 compatible = "arm,pl011\0arm,primecell";
         };
 
-In qemu apparently you don't have to set up the divsors or
+In qemu apparently you don't have to set up the divisors or
 anything. You can just start scribbling on the data register and it
 will be displayed by qemu. 
 
@@ -66,5 +66,31 @@ Coredump on the compile:
 
 SIGSEGV? Really? Too bad the compiler wasn't written in rust. 
 
+I don't want to play with this, I'm gonna take a break. 
+
+
+Found the [problem](https://github.com/rust-lang/rust/issues/73677).
+
+I can either:
+
+- Use a (very) old nightly
+
+- Somehow add `RUSTFLAGS="-C llvm-args=-global-isel=false"`
+
+- Or change the target to allow floating point. 
+
+
+OK. Works, at least in a release build. I am not setting the stack
+pointer, which is probably what is killing the debug build. I'll
+fiddle with that tomorrow:
+
+    $ cargo build --release
+    ....
+    $ qemu-system-aarch64 -nographic -m 1024M -cpu cortex-a53 -machine virt -kernel target/aarch64-xmin/release/aarch64_kernel
+    Hello world from the kernel
+    Hello world from the kernel
+    Hello world from the kernel
+    Hello world from the kernel
+    ....
 
 
