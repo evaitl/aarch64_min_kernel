@@ -5,4 +5,5 @@ SECTIONS
     .text : { *(.text) *(.rodata) }
     .data : { *(.data) }
     .bss : { *(.bss) }
+    LD_STACK_PTR = . + 0x10000 ;
 }

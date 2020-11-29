@@ -1,3 +1,15 @@
+## Sun Nov 29:
+
+Let's fix the debug version. It seems that the stack pointer isn't set
+up at startup. I'd prefer not to do a separate assembly file, so maybe
+just a couple of inline assembly instructions at the beginning of `_start`. 
+
+
+Doesn't work. In debug builds, the compiler uses sp prior to the first
+statement. Need to use global_asm.
+
+OK, That works. 
+
 ## Sat Nov 28:
 
 Starting on this thing. Basing it on my x86 min kernel. 
